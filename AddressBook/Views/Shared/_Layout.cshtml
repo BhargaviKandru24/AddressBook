@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/Content/defaultstyles.css" rel="stylesheet" />
+    <link href='https://www.fonts.com/font/monotype/century-gothic/regular' rel='stylesheet'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="https://www.wfonts.cpm/font/Microsoft Tai Le" rel="stylesheet">
+    <script src="~/Scripts/Contact.js"></script>
+</head>
+<body>
+    <div class="header">
+        <h1>Address Book</h1>
+    </div>
+    <nav>
+       
+        <ul>
+            <li>@Html.ActionLink("HOME", "Index")</li>
+            <li><a class="add-contact">+ADD</a></li>
+
+        </ul>
+
+        <div>
+            <img src="~/Content/blog-icon.png" blog-icon.png" alt="icon" name="blog_icon" title="blog-icon" />
+        </div>
+
+    </nav>
+
+    <div class="main-container">
+        <div class="contacts">
+            <h3>CONTACTS</h3>
+            <div class="contact-container">
+                @{Html.RenderAction("ViewContacts"); }
+            </div>
+        </div>
+        <div class="contact-information" >
+             @Html.Action("ContactInformation")
+        </div>
+        <div class="form-body">
+            @Html.Action("AddContact")
+        </div>
+        <div class="container body-content">
+            @RenderBody()
+
+           </div>
+    </div>
+
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,245 @@
+
+    body
+
+{
+    top: 0px;
+    left: 0px;
+    position: relative;
+    min-height: 100%;
+    margin: 0px;
+    font-size: 15px;
+    display: block;
+}
+
+body {
+    font-family: 'microsoft tai le';
+}
+body
+.header h1 {
+    font-family: 'century gothic';
+    background-color: rgba(0,158,208,1);
+    color: white;
+    padding: 25px;
+    font-size: 50px;
+    margin: 0px;
+    margin-left: 0px;
+    font-weight: normal;
+}
+
+nav {
+    width: 100%;
+    background-color: #333;
+    display: inline-flex;
+    height: 35px;
+}
+
+    nav ul {
+        font-family: 'microsoft tai le';
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
+        width: 100%;
+        font-weight: bold;
+    }
+
+    nav div {
+        float: right;
+        padding-right: 30px;
+        padding-top: 6px;
+        color: white;
+    }
+
+li {
+    float: left;
+}
+
+    li a {
+        margin: 0px;
+        display: inline-block;
+        text-align: center;
+        text-decoration: none;
+        color: white;
+        outline: 0px;
+        padding: 8px 12px;
+        border-left: 4px solid #333;
+    }
+
+        li a:visited {
+            color: white;
+        }
+
+        li a:hover {
+            background-color: orange;
+            color: black;
+            cursor: pointer;
+            border-left: 4px solid white;
+        }
+.main-container {
+    width: 70%;
+    margin: auto;
+    margin-top: 20px;
+    display: flex;
+}
+
+.contacts {
+    width: 500px;
+}
+
+.form {
+    width: 670px;
+    height: auto;
+    float: right;
+    margin-right: 100px;
+    padding: 25px;
+    border: 1px solid white;
+    box-shadow: 0px 0px 30px #020202;
+}
+
+a:any-link {
+    color: white;
+    text-decoration: none;
+}
+.contacts ul {
+    float: left;
+    text-align: left;
+    padding:0px;
+}
+
+.contacts li {
+    border: 1px solid gray;
+    height: auto;
+    width: 385px;
+    margin: 0px;
+    padding-left: 15px;
+    list-style-type: none;
+    font-size: 15px;
+    float: none;
+    overflow: auto;
+}
+    .contacts li p {
+        margin: 0px;
+        padding:0px;
+        list-style-type: none;
+        font-size: 15px;
+        float: none;
+    }
+
+    .contacts li a{
+        border-left:0px;
+    }
+    .contacts li p:first-child {
+        font-size: 25px;
+        padding: 5px 0px 2px;
+    }
+
+input {
+    height: 40px;
+    width: 520px;
+    margin: 0px 2px 8px;
+    border: 1px solid black;
+    font-size: 20px;
+}
+
+.contact-container a {
+    color: black;
+    border-left:0px;
+}
+
+    .contact-container a:hover {
+        background-color: white;
+        color: black;
+        cursor: pointer;
+    }
+    .contact-form {
+    padding-left: 100px;
+}
+
+.form p {
+    font-size: 12px;
+    margin: 5px;
+    font-weight: bold;
+}
+
+.form span {
+    color: red;
+}
+
+.form textarea {
+    height: 100px;
+    width: 520px;
+    border: 1px solid black;
+    margin-right: 30px;
+    font-size: 20px;
+    font-family: 'arial';
+}
+
+.address {
+    height: 100px;
+}
+
+.number {
+    display: inline-block;
+    width: 570px;
+}
+
+.phone {
+    width: 266.4px;
+    display: table-cell;
+}
+
+    .phone input {
+        width: 250px;
+    }
+
+    .phone p {
+        width: 100px;
+        margin-right: 225px;
+        display: inline;
+    }
+
+.form button,.cancel{
+    width: 115px;
+    height: 35px;
+    background-color: rgb(70,140,0);
+    border-color: rgb(70,140,0);
+    color: white;
+    float: right;
+    margin: 11px;
+    text-align: center;
+    border: 1px solid rgb(70,140,0);
+    cursor: pointer;
+    font-size:15px;
+}
+
+.contact-information span {
+    display: -webkit-inline-box;
+    padding: 12px;
+    width: 500px;
+    padding-left: 0px;
+}
+
+.contact-information img {
+    width: 15px;
+}
+
+.contact-information h1 {
+    margin: 0px;
+    width: 255px;
+}
+
+.edit {
+    margin-right: 50px;
+    margin-top: 7px;
+}
+
+.selected-data {
+    background-color: rgb(206,231,242);
+}
+
+.contact-information span a
+{
+    color:black;
+
+}
