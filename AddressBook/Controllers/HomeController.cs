@@ -23,10 +23,7 @@ namespace AddressBook.Controllers
         {
             return PartialView();
         }
-
-
-
-
+        
         public ActionResult ContactInformation()
         {
             return PartialView();
