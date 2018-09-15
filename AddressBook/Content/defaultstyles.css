@@ -241,5 +241,12 @@ input {
 .contact-information span a
 {
     color:black;
+}
 
+.show{
+    display:inline-block;
+}
+
+.hide{
+    display:none;
 }
