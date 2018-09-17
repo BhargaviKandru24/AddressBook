@@ -1,3 +1,74 @@
+module Ajax {
+    export class Options {
+        url: string;
+        method: string;
+        data: Object;
+        constructor(url: string, method?: string, data?: Object) {
+            this.url = url;
+            this.method = method || "get";
+            this.data = data || {};
+        }
+    }
+
+    export class Service {
+        public request = (options: Options, successCallback: Function, errorCallback?: Function): void => {
+            var that = this;
+            $.ajax({
+                url: options.url,
+                type: options.method,
+                data: options.data,
+                contentType : "application/json; charset=utf-8",
+                cache: false,
+                dataType: "json",
+                success: function (d) {
+                    successCallback(d);
+                },
+                error: function (d) {
+                    if (errorCallback) {
+                        errorCallback(d);
+                        return;
+                    }
+                    var errorTitle = "Error in (" + options.url + ")";
+                    var fullError = JSON.stringify(d);
+                    console.log(errorTitle);
+                    console.log(fullError);
+                    that.showJqueryDialog(fullError, errorTitle);
+                }
+            });
+        }
+        public get = (url: string, successCallback: Function, errorCallback?: Function): void => {
+            this.request(new Options(url), successCallback, errorCallback);
+        }
+        public getWithDataInput = (url: string, data: Object, successCallback: Function, errorCallback?: Function): void => {
+            this.request(new Options(url, "get", data), successCallback, errorCallback);
+        }
+        public postWithData = (url: string, data: Object, successCallback: Function, errorCallback?: Function): void => {
+            this.request(new Options(url, "post", data), successCallback, errorCallback);
+        }
+        public putWithData = (url: string, data: Object, successCallback: Function, errorCallback?: Function): void => {
+            this.request(new Options(url, "put", data), successCallback, errorCallback);
+        }
+        public delete = (url: string, successCallback: Function, errorCallback?: Function): void => {
+            this.request(new Options(url, "delete"), successCallback, errorCallback);
+        }
+
+        public showJqueryDialog = (message: string, title?: string, height?: number): void => {
+            alert(title + "\n" + message);
+            title = title || "Info";
+            height = height || 120;
+            message = message.replace("\r", "").replace("\n", "<br/>");
+            $("<div title='" + title + "'><p>" + message + "</p></div>").dialog({
+                minHeight: height,
+                minWidth: 400,
+                maxHeight: 500,
+                modal: true,
+                buttons: {
+                    Ok: function () { $(this).dialog('close'); }
+                }
+            });
+        }
+    }
+}
 
 class contact {
     id?: number;
@@ -18,21 +89,19 @@ class contact {
     }
 
     init(): void {
-
-        $.ajax({
-            type: "GET",
-            url: "/API/Contact/", // the method we are calling
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-        }).done(function (response) {
+        var service = new Ajax.Service();
+        var url = "/API/Contact/";
+        var options = new Ajax.Options(url);
+        service.request(options, function (response) {
             $(".contact-container").empty();
             response.forEach(function (contact) {
                 $(".contact-container").append('<li class="user-data"  id=' + contact.Id + '><p>' + contact.Name + "</p><p>" + contact.Email + "</p><p>" + contact.Mobile + "</p></li>");
             });
             window.location.hash = "Contact/ViewContacts";
-        }).fail(function (response) {
+        }, function (response) {
             alert("Cannot View Contacts");
         });
+       
     }
 
     addContact(): void {
@@ -49,14 +118,11 @@ class contact {
         $(".form").hide();
         $(".contact-information").show();
         $("#" + activeContactId).addClass("selected-data");
-        window.location.hash = "Contact/" + activeContactId;
-        $.ajax({
-            type: "GET",
-            url: "/API/Contact/" + activeContactId, // the method we are calling
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
 
-        }).done(function (response) {
+        var service = new Ajax.Service();
+        var url = "/API/Contact/" + activeContactId;
+        var options = new Ajax.Options(url);
+        service.request(options, function (response) {
             $(".name-container").append(response.Name);
             $(".email-container").append(response.Email);
             $(".mobile-container").append(response.Mobile);
@@ -65,10 +131,12 @@ class contact {
             $(".address-container").append(response.Address);
             $(".edit").attr("id", response.Id);
             $(".delete").attr("id", response.Id);
-            alert("Your Contact information");
-        }).fail(function (response) {
+            window.location.hash = "Contact/" + activeContactId;
+
+        },function (response) {
             alert("cannot find the contact information");
         });
+
     }
     reset(): void {
         $(".contact-form").find("input[type=text],textarea[type=text]").val("");
@@ -115,28 +183,20 @@ class contact {
                 this.website = ($(".website").val()),
                 this.address = ($(".address").val())
             );
-
-            $.ajax({
-                type: "POST",
-                url: "/api/Contact",
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify(myData),
-                dataType: "json"
-            }).done(function (response) {
+            var service = new Ajax.Service();
+            service.postWithData("/api/Contact", JSON.stringify(myData), function (response) {
                 $(".name").val("");
                 $(".email").val("");
                 $(".mobile").val("");
                 $(".landline").val("");
                 $(".website").val("");
                 $(".address").val("");
-                // init();
-                
-			$(".contact-container").append('<li class="user-data"  id='+ response.Id+'><p>'+response.Name+"</p><p>"+response.Email+"</p><p>"+response.Mobile+"</p></li>");
-			
-                alert("Contact is added");
-            }).fail(function (msg) {
+                $(".contact-container").append('<li class="user-data"  id=' + response.Id + '><p>' + response.Name + "</p><p>" + response.Email + "</p><p>" + response.Mobile + "</p></li>");
+
+            }, function (msg) {
                 alert("Cannot add Contact");
             });
+ 
         }
     }
 
@@ -151,18 +211,15 @@ class contact {
             this.address = ($(".address").val()),
             this.id = activeContactId
         );
-        $.ajax({
-            type: "PUT",
-            url: "/API/Contact/", // the method we are calling
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify(user),
-        }).done(function (response) {
+        var service = new Ajax.Service();
+        service.putWithData("/API/Contact/", JSON.stringify(user), function (response) {
             alert("Contact is updated");
             $("#" + user.id).replaceWith('<li class="user-data"  id=' + user.id + '><p>' + user.name + "</p><p>" + user.email + "</p><p>" + user.mobile + "</p></li>");
             window.location.hash = "Contact/ViewContacts";
-        }).fail(function (response) {
+        }, function (response) {
             alert("Cannot update the contact");
-        })
+        });
+       
         this.reset();
         $(".form").hide();
         this.init();
@@ -174,41 +231,33 @@ class contact {
         $(".form").show();
         $(".update").show();
         window.location.hash = "Contact/Edit/" + activeContactId;
-        $.ajax({
-            type: "GET",
-            url: "/API/Contact/" + activeContactId, // the method we are calling
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-
-        }).done(function (response) {
+        var service = new Ajax.Service();
+        var url = "/API/Contact/" + activeContactId;
+        var options = new Ajax.Options(url);
+        service.request(options, function (response) {
             $(".name").val(response.Name);
             $(".email").val(response.Email);
             $(".mobile").val(response.Mobile);
             $(".landline").val(response.Landline);
             $(".website").val(response.Website);
             $(".address").val(response.Address);
-            $(".update").attr("id", response.Id);
-        }).fail(function (response) {
+        }, function (response) {
             alert("Cannot get your contact details");
         });
+      
     }
 
     delete(activeContactId: number): void {
         this.reset();
-        $.ajax({
-            type: "DELETE",
-            url: "/API/Contact/" + activeContactId, // the method we are calling
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-
-        }).done(function (response) {
-            //this.init();
+        var service = new Ajax.Service();
+        service.delete("/API/Contact/" + activeContactId, function (response) {
             alert("contact is deleted");
             window.location.hash = "Contact/ViewContacts";
             $("#" + activeContactId).remove();
-        }).fail(function (response) {
+        }, function (response) {
             alert("Cannot delete the contact");
         });
+        
         $(".contact-information").hide();
     }
 }
@@ -251,7 +300,7 @@ window.onload = () => {
     var userContact = new contact;
     userContact.init();
 
-
+   
 
     $(".name").keyup(function () {
         isDataValid('.name', "Name is Required", ".contact-name");
@@ -278,10 +327,7 @@ window.onload = () => {
     $(".add").on('click', function () {
         userContact.add();
     });
-    //function add(): void {
-       
-    //}
-
+   
    // function contactInformation(): void {
     $(".contact-container").on("click", '.user-data', function () {
         if ($(this).attr("id")) {

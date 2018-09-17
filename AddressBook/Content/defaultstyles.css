@@ -118,6 +118,9 @@ a:any-link {
     float: none;
     overflow: auto;
 }
+.contacts li:hover{
+    cursor:pointer;
+}
     .contacts li p {
         margin: 0px;
         padding:0px;
@@ -234,19 +237,20 @@ input {
     margin-top: 7px;
 }
 
-.selected-data {
-    background-color: rgb(206,231,242);
+    .edit:hover {
+        cursor: pointer;
+    }
+
+.delete:hover {
+    cursor: pointer;
 }
+
+    .selected-data {
+        background-color: rgb(206,231,242);
+    }
 
 .contact-information span a
 {
     color:black;
 }
 
-.show{
-    display:inline-block;
-}
-
-.hide{
-    display:none;
-}
