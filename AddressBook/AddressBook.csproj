@@ -196,6 +196,8 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\Contactjs.ts" />
+    <TypeScriptCompile Include="Scripts\ContactService.ts" />
+    <TypeScriptCompile Include="Scripts\main.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
   </ItemGroup>
   <PropertyGroup>
